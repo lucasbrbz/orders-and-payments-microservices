@@ -1,0 +1,45 @@
+# @link https://istio.io/latest/docs/reference/config/networking/gateway/
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: api-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+# @link https://istio.io/latest/docs/concepts/traffic-management/#virtual-services
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: app-route
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - api-gateway
+  http:
+    - match:
+        - uri:
+            exact: /orders
+      route:
+        - destination:
+            host: orders
+            port:
+              number: 4200
+    - match:
+        - uri:
+            prefix: /payments
+      route:
+        - destination:
+            host: payments
+            port:
+              number: 4201
+      rewrite:
+        uri: '/'

@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: orders
+  name: orders
+spec:
+  ports:
+    - name: "4200"
+      port: 4200
+      targetPort: 4200
+  selector:
+    io.kompose.service: orders
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml
+    kompose.version: 1.27.0 (b0ed6a2c9)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: orders
+  name: orders
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: orders
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml
+        kompose.version: 1.27.0 (b0ed6a2c9)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: orders
+    spec:
+      containers:
+        - env:
+            - name: DB_HOST
+              value: mysql
+            - name: DB_NAME
+              value: orders_and_payments
+            - name: DB_PASSWORD
+              value: root
+            - name: DB_PORT
+              value: "3306"
+            - name: DB_USER
+              value: root
+            - name: REDIS_HOST
+              value: redis
+          image: orders-and-payments/orders:latest
+          imagePullPolicy: Never
+          name: orders
+          ports:
+            - containerPort: 4200
+          resources: {}
+      restartPolicy: Always
+status: {}

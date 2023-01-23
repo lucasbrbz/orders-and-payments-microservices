@@ -1,6 +1,6 @@
 #
 # ---- Base Node ----
-FROM node:8-alpine AS base
+FROM node:18.12.1 AS base
 
 RUN yarn global add pm2
 
