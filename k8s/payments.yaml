@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: payments
-  name: payments
+  name: payments-service
 spec:
   ports:
     - name: "4201"
@@ -28,7 +28,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: payments
-  name: payments
+  name: payments-deployment
 spec:
   replicas: 1
   selector:

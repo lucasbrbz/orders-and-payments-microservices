@@ -7,7 +7,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: orders
-  name: orders
+  name: orders-service
 spec:
   ports:
     - name: "4200"
@@ -28,7 +28,7 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: orders
-  name: orders
+  name: orders-deployment
 spec:
   replicas: 1
   selector:
@@ -63,6 +63,9 @@ spec:
           name: orders
           ports:
             - containerPort: 4200
-          resources: {}
+          resources:
+            limits:
+              memory: "128M"
+              cpu: "100m" # 10% de cada core de CPU - m -> millicore (1000m = 1.0 = 1 CPU)
       restartPolicy: Always
 status: {}
