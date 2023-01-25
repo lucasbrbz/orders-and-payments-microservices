@@ -4,11 +4,6 @@
 Passo a passo
 
 
-## Demonstração
-
-Insira um gif ou um link de alguma demonstração
-
-
 ## Instalação
 Instalar o istio
 
