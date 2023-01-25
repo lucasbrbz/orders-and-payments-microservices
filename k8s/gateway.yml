@@ -27,18 +27,18 @@ spec:
   http:
     - match:
         - uri:
-            exact: /orders
+            prefix: /api/v1/orders
       route:
         - destination:
-            host: orders
+            host: orders-service
             port:
               number: 4200
     - match:
         - uri:
-            prefix: /payments
+            prefix: /api/v1/payments
       route:
         - destination:
-            host: payments
+            host: payments-service
             port:
               number: 4201
       rewrite:
